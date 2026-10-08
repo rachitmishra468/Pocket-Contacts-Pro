@@ -19,7 +19,7 @@ jobs:
           xcodebuild -version
           xcodebuild -list
 
-      - name: Install Pods (if Podfile exists)
+      - name: Install Pods
         run: |
           if [ -f "Podfile" ]; then
             pod install
@@ -27,7 +27,8 @@ jobs:
 
       - name: Build iOS App
         run: |
-          xcodebuild -scheme "Pocket Contacts Pro" \
+          xcodebuild -workspace "Pocket Contacts Pro.xcworkspace" \
+                     -scheme "Pocket Contacts Pro" \
                      -sdk iphonesimulator \
                      -configuration Release \
                      -derivedDataPath build \
