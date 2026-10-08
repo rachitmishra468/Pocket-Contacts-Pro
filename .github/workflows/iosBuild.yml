@@ -8,27 +8,21 @@ on:
 
 jobs:
   build_ios:
-    runs-on: macos-latest 
+    runs-on: macos-latest
 
     steps:
-     
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-     
-      - name: Select Xcode Version
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '15.0' 
+      - name: Check Xcode Version
+        run: xcodebuild -version
 
-    
       - name: Install Pods
         run: |
           if [ -f "Podfile" ]; then
             pod install
           fi
 
-     
       - name: Build iOS App
         run: |
           xcodebuild -scheme "YourSchemeName" \
@@ -36,11 +30,9 @@ jobs:
                      -configuration Release \
                      -derivedDataPath build \
                      clean build
-       
 
-     
       - name: Upload iOS Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ios-ipa-artifact
-          path: build/Build/Products/Release-iphonesimulator/ # Build output path
+          path: build/Build/Products/Release-iphonesimulator/
