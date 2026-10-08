@@ -17,9 +17,9 @@ jobs:
       - name: Check Xcode Version & List Schemes
         run: |
           xcodebuild -version
-          xcodebuild -list 
+          xcodebuild -list
 
-      - name: Install Pods
+      - name: Install Pods (if Podfile exists)
         run: |
           if [ -f "Podfile" ]; then
             pod install
@@ -31,6 +31,7 @@ jobs:
                      -sdk iphonesimulator \
                      -configuration Release \
                      -derivedDataPath build \
+                     IPHONEOS_DEPLOYMENT_TARGET=12.0 \
                      clean build
 
       - name: Upload iOS Build Artifact
